@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule,FormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup} from '@angular/forms';
+import {ReactiveFormsModule,FormsModule } from '@angular/forms';
 //import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { Client } from '../../models/client.model';
