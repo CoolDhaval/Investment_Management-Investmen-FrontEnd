@@ -1,0 +1,119 @@
+<div class="container-fluid">  
+    <form [formGroup]="transactionForm" (ngSubmit)="saveTransaction()" >
+    <div class="row"></div>
+      <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-2">          
+          <label class="block font-medium mb-1">Transaction Code</label>
+          <input formControlName="TransactionCode" class="w-full border rounded px-3 py-2" type="text" />        
+      </div>
+      <div class="col-md-2">      
+        <label class="block font-medium mb-1">Client</label>
+        <select formControlName="ClientCode" class="w-full border rounded px-3 py-2">
+          <option *ngFor="let c of clients" [value]="c.ClientCode">{{ c.ClientName }}</option>
+        </select>      
+      </div>
+      <div class="col-md-2">      
+        <label class="block font-medium mb-1">Company</label>
+        <select formControlName="CompanyCode" class="w-full border rounded px-3 py-2">
+          <option *ngFor="let c of companies" [value]="c.CompanyCode">{{ c.CompanyName }}</option>
+        </select>      
+      </div>
+      <div class="col-md-2">      
+        <label class="block font-medium mb-1">Scheme</label>
+        <select formControlName="SchemeCode" class="w-full border rounded px-3 py-2">
+          <option *ngFor="let s of schemes" [value]="s.SchemeCode">{{ s.SchemeName }}</option>
+        </select>      
+      </div>
+      <div class="col-md-2">                  
+        <label class="block font-medium mb-1">Credit/Debit</label>
+        <select formControlName="CreditDebit" class="w-full border rounded px-3 py-2">
+          <option value="C">Credit</option>
+          <option value="D">Debit</option>
+        </select>
+      </div>  
+    </div>
+
+
+    <div class="row">
+      <div class="col-md-1"></div>
+      <div class="col-md-2">                  
+        <label class="block font-medium mb-1">Transaction Date</label>
+        <input formControlName="TransactionDate" type="date" class="w-full border rounded px-3 py-2" />
+      </div>
+      <div class="col-md-2">                  
+        <label class="block font-medium mb-1">Amount</label>
+        <input formControlName="Amount" type="number" class="w-full border rounded px-3 py-2" />
+      </div>
+
+      <div class="col-md-2">            
+        <label class="block font-medium mb-1">Transaction Type</label>
+        <input formControlName="TransactionType" class="w-full border rounded px-3 py-2" type="text" />
+      </div>
+
+      <div class="col-md-2">                        
+        <label class="block font-medium mb-1">Is Return Complete</label>
+        <select formControlName="IsReturnComplete" class="w-full border rounded px-3 py-2">
+          <option [value]="1">Yes</option>
+          <option [value]="0">No</option>
+        </select>
+      </div>  
+      <div class="col-md-2">                  
+        <label class="block font-medium mb-1">Remarks</label>
+        <textarea formControlName="Remarks" class="w-full border rounded px-3 py-2"></textarea>
+      </div>
+    </div>
+  
+    <div class="row">
+      <div class="col-md-1"></div>
+      <div class="col-md-2">                        
+        <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Save</button>
+      </div>
+      <div class="col-md-2">                          
+        <button type="button" (click)="cancelEdit()" class="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500">Cancel</button>
+      </div>
+    </div>
+    <div class="row"></div>
+    </form>
+  </div>
+  
+  <!-- Transaction Table Section -->
+  <div class="max-w-6xl mx-auto mt-10 p-6 bg-white shadow rounded">
+    <table >
+      <thead class="thead-dark">
+        <tr>
+          <th class="px-4 py-2 border"><input type="text" [(ngModel)]="filters.TransactionCode" placeholder="Filter Company" class="w-full p-1 border rounded"></th>
+          <th class="px-4 py-2 border"><input type="text" [(ngModel)]="filters.ClientCode" placeholder="Filter ClientCode" class="w-full p-1 border rounded"></th>
+          <th class="px-4 py-2 border"><input type="text" [(ngModel)]="filters.CompanyCode" placeholder="Filter CompanyCode" class="w-full p-1 border rounded"></th>          
+          <th class="px-4 py-2 border"><input type="text" [(ngModel)]="filters.TransactionDate" placeholder="Filter Date" class="w-full p-1 border rounded"></th>
+          <th class="px-4 py-2 border"><input type="text" [(ngModel)]="filters.Amount" placeholder="Filter Amount" class="w-full p-1 border rounded"></th>
+          <th class="px-4 py-2 border"><input type="text" [(ngModel)]="filters.TransactionType" placeholder="Filter TransactionType" class="w-full p-1 border rounded"></th>
+          <th class="px-4 py-2 border text-center">Actions</th>
+        </tr>
+          <tr>
+            <th class="px-4 py-2 border">Code</th>
+            <th class="px-4 py-2 border">Client</th>
+            <th class="px-4 py-2 border">Company</th>            
+            <th class="px-4 py-2 border">Date</th>
+            <th class="px-4 py-2 border">Amount</th>
+            <th class="px-4 py-2 border">Type</th>
+            <th class="px-4 py-2 border text-center">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let t of filteredLinks()" class="hover:bg-gray-50">
+            <td class="px-4 py-2 border">{{ t.TransactionCode }}</td>
+            <td class="px-4 py-2 border">{{ t.ClientCode }}</td>
+            <td class="px-4 py-2 border">{{ t.CompanyCode }}</td>            
+            <td class="px-4 py-2 border">{{ t.TransactionDate | date:'shortDate' }}</td>
+            <td class="px-4 py-2 border text-right">{{ t.Amount | number:'1.2-2' }}</td>
+            <td class="px-4 py-2 border">{{ t.TransactionType }}</td>
+            <td >
+              <button class="btn btn-sm btn-info mr-1" (click)="editTransaction(t)" >Edit</button>
+              <button class="btn btn-sm btn-danger" (click)="deleteTransaction(t.TransactionCode)" >Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>    
+  </div>
+  

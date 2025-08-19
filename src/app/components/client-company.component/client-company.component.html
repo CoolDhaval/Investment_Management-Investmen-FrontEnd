@@ -1,0 +1,129 @@
+<div class="row">
+<div class="col-md-3">
+<div class="container-fluid">    
+  
+    <form [formGroup]="linkForm" (ngSubmit)="saveLink()">
+      <div class="row"></div>
+      <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-6">
+          <label class="block font-medium">Company</label>
+          <select class="w-full border p-1" formControlName="CompanyCode" (change)="onCompanyChange()">
+            <option value="">Select Company</option>
+            <option *ngFor="let company of companies" [value]="company.CompanyCode">
+              {{ company.CompanyName }}
+            </option>
+          </select>
+        </div>
+      </div>      
+      <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-4">
+          <label class="block font-medium">Client   </label>
+          <select class="w-full border p-1" formControlName="ClientCode">
+            <option value="">Select Client</option>
+            <option *ngFor="let client of clients" [value]="client.ClientCode">
+              {{ client.ClientName }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-6">
+          <label class="block font-medium">Investing Amount</label>
+          <input type="number" class="w-full border p-1" formControlName="InvestmentAmount"   pattern="^[0-9]{1,6}$"
+          maxlength="9"/>
+        </div>
+      
+       
+      
+    </div>
+      <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-1">
+          <button type="submit" class="mt-6 bg-blue-600 text-white px-4 py-2 rounded">
+            Save 
+          </button>
+        </div>
+        <div class="row">  </div>
+        <div class="row">  
+          <div class="col-md-1"></div>
+        <div class="col-md-1">
+          <button class="mt-6 bg-blue-600 text-white px-4 py-2 rounded" (click)="clearForm()">Clear</button>
+        </div>
+      </div>
+    </div>
+      <div class="row"></div>
+    </form>
+  </div>
+
+  </div>
+  <div class="col-md-6">
+  <div *ngIf="schemeDetails" class="mt-2 border-t pt-6">
+    <h3 class="text-lg font-semibold">Scheme Details</h3>      
+      <div class="row">
+      <div class="col-md-4"><strong>Investment Date:</strong> {{ schemeDetails.DateOfInvestment| date:'yyyy-MM-dd' }}</div>
+      </div>
+      <div class="row">
+      <div class="col-md-4"><strong>Tenure (months):</strong> {{ schemeDetails.TenureMonths }}</div>
+    </div>
+    <div class="row">
+      <div class="col-md-4"><strong>Maturity Date:</strong> {{ schemeDetails.MaturityDate| date:'yyyy-MM-dd' }}</div>
+    </div>
+    <div class="row">
+      <div class="col-md-4"><strong>Interest Rate:</strong> {{ schemeDetails.InterestRate }}%</div>
+    </div>
+    <div class="row">
+      <div class="col-md-4"><strong>Interest Frequency:</strong> {{ schemeDetails.InterestFrequencyText }}</div>
+    </div>
+    <div class="row">
+      <div class="col-md-4"><strong>Interest Months:</strong> {{ schemeDetails.InterestMonthsText }}</div>
+    </div>
+    <div class="row">
+      <div class="col-md-4"><strong>Payment Day:</strong> {{ schemeDetails.PaymentDay }}</div>
+    </div>
+    <div class="row">
+      <div class="col-md-6"><strong>Principal Repayment:</strong> {{ schemeDetails.PrincipalRepaymentText }}</div>
+    </div>
+  </div>
+  <hr class="my-4">
+</div>
+</div>
+<!-- Column-wise Filter Row -->
+<table class="table-auto w-full border-collapse border border-gray-300 mt-4">
+  <thead>
+    <tr class="bg-gray-100 text-left">
+      <th class="border px-2 py-1">
+        <input type="text" [(ngModel)]="filters.CompanyName" placeholder="Filter Company" class="w-full p-1 border rounded">
+      </th>
+      <th class="border px-2 py-1">
+        <input type="text" [(ngModel)]="filters.ClientName" placeholder="Filter Client" class="w-full p-1 border rounded">
+      </th>
+      <th class="border px-2 py-1">
+        <input type="text" [(ngModel)]="filters.InvestingAmount" placeholder="Filter Amount" class="w-full p-1 border rounded">
+      </th>
+      <th class="border px-2 py-1"></th>
+    </tr>
+    <tr class="bg-gray-200">
+      <th class="border px-2 py-1">Company Name</th>
+      <th class="border px-2 py-1">Client Name</th>
+      <th class="border px-2 py-1">Investing Amount</th>
+      <th class="border px-2 py-1">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let link of filteredLinks()">
+      <td class="border px-2 py-1">{{ link.CompanyName }}</td>
+      <td class="border px-2 py-1">{{ link.ClientName }}</td>
+      <td class="border px-2 py-1">{{ link.InvestmentAmount }}</td>
+      <td class="border px-2 py-1">
+        <button class="btn btn-sm btn-primary me-2" (click)="editLink(link)">Edit</button>
+        <button class="btn btn-sm btn-danger" (click)="deleteLink(link)">Delete</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+

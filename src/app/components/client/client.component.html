@@ -1,0 +1,113 @@
+<div class="container-fluid">
+  <h2>Client Master</h2>
+    <form [formGroup]="clientForm" (ngSubmit)="saveClient()">
+      <div class="row"></div>
+      <div class="row">
+        <div class="col-md-1">   </div>
+        <div class="col-md-2">        
+          <label>Client Code:</label>
+          <input type="text" class="w-full border p-1" formControlName="ClientCode" [readonly]="isEditing" />
+        </div>
+        <div class="col-md-2">        
+          <label>Client Name:</label>
+          <input type="text" class="w-full border p-1" formControlName="ClientName" />
+        </div>
+        <div class="col-md-2">        
+          <label>Contact No:</label>
+          <input type="text" class="w-full border p-1" formControlName="ContactNo" />
+        </div>
+        <div class="col-md-2">        
+          <label>PAN No:</label>
+          <input type="text" class="w-full border p-1" formControlName="PANNo" />
+        </div>
+        <div class="col-md-2">        
+          <label>Aadhar No:</label>
+          <input type="text" class="w-full border p-1" class="w-full border p-1" formControlName="AadharNo" />
+        </div>
+      </div>      
+
+
+      <div class="row">
+        <div class="col-md-1">   </div>
+        <div class="col-md-2">        
+          <label>Deposit Bank Name:</label>
+          <input type="text" class="w-full border p-1" formControlName="DepositBankName" />
+        </div>
+        <div class="col-md-2">        
+          <label>Deposit Account No:</label>
+          <input type="text" class="w-full border p-1" formControlName="DepositBankAccountNo" />
+        </div>
+        <div class="col-md-2">        
+          <label>Deposit IFSC Code:</label>
+          <input type="text" class="w-full border p-1" formControlName="DepositBankIFSCCode" />
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-1">   </div>
+        <div class="col-md-2">        
+          <label>Withdrawal Bank Name:</label>
+          <input type="text" class="w-full border p-1" formControlName="WithdrawalBankName" />
+        </div>
+        <div class="col-md-2">        
+          <label>Withdrawal Account No:</label>
+          <input type="text" class="w-full border p-1" formControlName="WithdrawalBankAccountNo" />
+        </div>
+        <div class="col-md-2">        
+          <label>Withdrawal IFSC Code:</label>
+          <input type="text" class="w-full border p-1" formControlName="WithdrawalBankIFSCCode" />
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-1">   </div>
+        <div class="col-md-2">        
+          <button type="submit">{{ isEditing ? 'Update' : 'Add' }} Client</button>
+        </div>
+        <div class="col-md-2">        
+          <button type="button" (click)="cancelEdit()">Cancel</button>
+        </div>
+      </div>
+    <div class="row"></div>
+    </form>
+  
+    <table>
+      <thead>
+        <tr>
+          <th class="px-4 py-2 border"><input type="text" [(ngModel)]="filters.ClientCode" placeholder="Company code" class="w-full p-1 border rounded"></th>
+          <th class="px-4 py-2 border"><input type="text" [(ngModel)]="filters.ClientName" placeholder="Client Name" class="w-full p-1 border rounded"></th>
+          <th class="px-4 py-2 border"><input type="text" [(ngModel)]="filters.ContactNo" placeholder="Contact 1" class="w-full p-1 border rounded"></th>          
+          <th class="px-4 py-2 border"><input type="text" [(ngModel)]="filters.PANNo" placeholder="Contact 2" class="w-full p-1 border rounded"></th>          
+          <th class="px-4 py-2 border"><input type="text" [(ngModel)]="filters.AadharNo" placeholder="BankName" class="w-full p-1 border rounded"></th>
+          <th class="px-4 py-2 border"><input type="text" [(ngModel)]="filters.DepositBankAccountNo" placeholder="Account No" class="w-full p-1 border rounded"></th>
+          <th class="px-4 py-2 border"><input type="text" [(ngModel)]="filters.WithdrawalBankAccountNo" placeholder="IFSC code" class="w-full p-1 border rounded"></th>        
+          <th class="px-4 py-2 border text-center">Actions</th>
+        </tr>
+        <tr>
+          <th>Code</th>
+          <th>Name</th>
+          <th>Contact</th>
+          <th>PAN</th>
+          <th>Aadhar</th>
+          <th>Deposit A/C</th>
+          <th>Withdrawal A/C</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let client of filteredLinks()">
+          <td>{{ client.ClientCode }}</td>
+          <td>{{ client.ClientName }}</td>
+          <td>{{ client.ContactNo }}</td>
+          <td>{{ client.PANNo }}</td>
+          <td>{{ client.AadharNo }}</td>
+          <td>{{ client.DepositBankAccountNo }}</td>
+          <td>{{ client.WithdrawalBankAccountNo }}</td>
+          <td>
+            <button class="btn btn-sm btn-info" (click)="editClient(client)">Edit</button>
+            <button class="btn btn-sm btn-danger" (click)="deleteClient(client.ClientCode)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

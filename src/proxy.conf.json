@@ -1,0 +1,9 @@
+{
+    "/api": {
+      "target": "https://investmentmanagement-backend-api-production.up.railway.app",
+      "secure": true,
+      "changeOrigin": true,
+      "logLevel": "debug"
+    }
+  }
+  

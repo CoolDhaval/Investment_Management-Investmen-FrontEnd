@@ -1,0 +1,176 @@
+<div class="container-fluid">
+  <h2>Company Master</h2>
+  
+
+  <form [formGroup]="companyForm" (ngSubmit)="saveCompany()">
+    <div class="row"></div>
+    <div class="row">
+      <div class="col-md-1"></div>
+      <div class="col-md-2">        
+        <label>Company Code</label>        
+        <input type="text" class="form-control"  placeholder="CompanyCode" formControlName="CompanyCode" [readonly]="isEditing">
+      </div>
+      <div class="col-md-2">
+        <label>Company Name</label>
+        <input type="text" class="form-control" formControlName="CompanyName">
+      </div>
+      <div class=col-md-2>
+        <label>Contact No 1</label>
+        <input type="text" class="form-control" formControlName="ContactNo1">
+      </div>
+      <div class=col-md-2>
+        <label>Contact No 2</label>
+        <input type="text" class="form-control" formControlName="ContactNo2">
+    </div>
+  </div>    
+    
+
+    <div class="row">
+      <div class="col-md-1"></div>
+      <div class="col-md-2">
+        <label>Bank Name</label>
+        <input type="text" class="form-control" formControlName="BankName">
+      </div>
+      <div class="col-md-2">
+        <label>Bank Account No</label>
+        <input type="text" class="form-control" formControlName="BankAccountNo">
+      </div>
+      <div class="col-md-2">
+        <label>Bank IFSC</label>
+        <input type="text" class="form-control" formControlName="BankIFSC">
+      </div>
+      <div class=col-md-4>
+        <label>Email ID</label>
+        <input type="email" class="form-control" formControlName="EmailId">
+      </div>
+
+    </div>
+
+
+    <div class="row mt-3">
+      <div class="col-md-2 offset-md-1">
+        <label>Date of Investment</label>
+        <input type="date" class="form-control" formControlName="DateOfInvestment">
+      </div>
+      <div class="col-md-2">
+        <label>Tenure (months)</label>
+        <input type="number" class="form-control" formControlName="TenureMonths">
+      </div>
+      <div class="col-md-2">
+        <label>Maturity Date</label>
+        <input type="date" class="form-control" formControlName="MaturityDate">
+      </div>
+      <div class="col-md-2">
+        <label>Interest Rate % (pa)</label>
+        <input type="number" class="form-control" formControlName="InterestRate">
+      </div>
+    </div>
+    
+    <div class="row mt-3">
+
+      <div class="col-md-1 offset-md-1">
+        <label for="InterestFrequency" class="block text-sm font-medium text-gray-700">Interest Frequency</label>
+        <select
+          id="InterestFrequency"
+          formControlName="InterestFrequency"
+          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+        >
+          <option *ngFor="let freq of interestFrequencies" [value]="freq">{{ freq }}</option>
+        </select>
+      </div>
+      <div class="col-md-1">
+        <label for="InterestMonths" class="block text-sm font-medium text-gray-700">Interest Months</label>
+        <select
+          id="InterestMonths"
+          formControlName="InterestMonths"
+          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+        >
+          <option *ngFor="let month of interestMonthsOptions" [value]="month">{{ month }}</option>
+        </select>
+      </div>
+      <div class="col-md-1">
+        <label>Payment Day (1–30)</label>
+        <input type="number" class="form-control" formControlName="PaymentDay" min="1" max="30">
+      </div>
+      <!--
+      <div class="col-md-2">
+        <label>Principal Repayment</label>
+        <select class="form-control" formControlName="PrincipalRepayment">
+          <option *ngFor="let opt of principalRepaymentOptions" [value]="opt">{{ opt }}</option>
+        </select>
+      </div>
+    -->
+    <div class="col-md-1">
+      <label for="PrincipalRepayment" class="block text-sm font-medium text-gray-700">Principal Repayment</label>
+      <select
+        id="PrincipalRepayment"
+        formControlName="PrincipalRepayment"
+        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+      >
+        <option *ngFor="let repay of principalRepaymentOptions" [value]="repay">{{ repay }}</option>
+      </select>
+    </div>
+    </div>
+
+
+
+    
+    <div class="row">
+      <div class="col-md-1"></div>
+      <div class="col-md-2">
+    <button type="submit" class="btn btn-secondary">
+      {{ isEditing ? 'Update' : 'Add' }} Company
+    </button>
+  </div>
+    <div class="col-md-2">
+    <button type="button" class="btn btn-secondary" (click)="cancelEdit()">Cancel </button>
+  </div>
+  </div>
+  <div class="row"></div>
+
+  </form>
+
+  <hr>
+  <table class="table table-bordered mt-3">
+    <thead class="thead-dark">
+      <tr>
+        <th class="px-4 py-2 border"><input type="text" [(ngModel)]="filters.CompanyCode" placeholder="Company code" class="w-full p-1 border rounded"></th>
+        <th class="px-4 py-2 border"><input type="text" [(ngModel)]="filters.CompanyName" placeholder="Client Name" class="w-full p-1 border rounded"></th>
+        <th class="px-4 py-2 border"><input type="text" [(ngModel)]="filters.ContactNo1" placeholder="Contact 1" class="w-full p-1 border rounded"></th>          
+        <th class="px-4 py-2 border"><input type="text" [(ngModel)]="filters.ContactNo2" placeholder="Contact 2" class="w-full p-1 border rounded"></th>
+        <th class="px-4 py-2 border"><input type="text" [(ngModel)]="filters.EmailId" placeholder="EmailId" class="w-full p-1 border rounded"></th>
+        <th class="px-4 py-2 border"><input type="text" [(ngModel)]="filters.BankName" placeholder="BankName" class="w-full p-1 border rounded"></th>
+        <th class="px-4 py-2 border"><input type="text" [(ngModel)]="filters.BankAccountNo" placeholder="Account No" class="w-full p-1 border rounded"></th>
+        <th class="px-4 py-2 border"><input type="text" [(ngModel)]="filters.BankIFSC" placeholder="IFSC code" class="w-full p-1 border rounded"></th>        
+        <th class="px-4 py-2 border text-center">Actions</th>
+      </tr>
+      <tr>
+        <th>Company Code</th>
+        <th>Company Name</th>
+        <th>Contact No 1</th>
+        <th>Contact No 2</th>
+        <th>Email</th>
+        <th>Bank</th>
+        <th>Account No</th>
+        <th>IFSC</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let company of filteredLinks()">
+        <td>{{ company.CompanyCode }}</td>
+        <td>{{ company.CompanyName }}</td>
+        <td>{{ company.ContactNo1 }}</td>
+        <td>{{ company.ContactNo2 }}</td>
+        <td>{{ company.EmailId }}</td>
+        <td>{{ company.BankName }}</td>
+        <td>{{ company.BankAccountNo }}</td>
+        <td>{{ company.BankIFSC }}</td>
+        <td>
+          <button class="btn btn-sm btn-info mr-1" (click)="editCompany(company)">Edit</button>
+          <button class="btn btn-sm btn-danger" (click)="deleteCompany(company.CompanyCode)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

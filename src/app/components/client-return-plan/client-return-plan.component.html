@@ -1,0 +1,82 @@
+<h2>Client Return Plan</h2>
+
+<!-- Add formGroup to the table body or wrapping div -->
+
+  <table style="width: 100%; border: 1px solid black;">
+    <thead>
+      <tr>
+        <th class="px-4 py-2 border"><input type="text" [(ngModel)]="filters.ClientName" placeholder="Client code" class="w-full p-1 border rounded"></th>
+        <th class="px-4 py-2 border"><input type="text" [(ngModel)]="filters.CompanyName" placeholder="Company Code" class="w-full p-1 border rounded"></th>
+        <th class="px-4 py-2 border"><input type="text" [(ngModel)]="filters.PaymentDate" placeholder="Date" class="w-full p-1 border rounded"></th>          
+        <th class="px-4 py-2 border"><input type="text" [(ngModel)]="filters.InterestAmount" placeholder="I Amount" class="w-full p-1 border rounded"></th>          
+        <th class="px-4 py-2 border"><input type="text" [(ngModel)]="filters.PrincipalAmount" placeholder="P Amount" class="w-full p-1 border rounded"></th>
+        <th class="px-4 py-2 border"><input type="text" [(ngModel)]="filters.Remarks" placeholder="Remarks" class="w-full p-1 border rounded"></th>
+        <th class="px-4 py-2 border"><input type="text" [(ngModel)]="filters.Received" placeholder="Received" class="w-full p-1 border rounded"></th>        
+        <th class="px-4 py-2 border"><input type="text" [(ngModel)]="filters.ReceivedDate" placeholder="R Date" class="w-full p-1 border rounded"></th>
+        <th class="px-4 py-2 border"><input type="text" [(ngModel)]="filters.TransactionNo" placeholder="Trx No" class="w-full p-1 border rounded"></th>
+        <th class="px-4 py-2 border"><input type="text" [(ngModel)]="filters.ReceivedRemarks" placeholder="R Remarks" class="w-full p-1 border rounded"></th>        
+        <th class="px-4 py-2 border text-center">Actions</th>
+      </tr>
+      <tr>
+        <th style="width: 10%;">Client Name</th>
+        <th style="width: 10%;">Company Name</th>
+        <th style="width: 10%;">Payment Date</th>
+        <th style="width: 10%;">Interest Amount</th>
+        <th style="width: 10%;">Principal Amount</th>
+        <th style="width: 10%;">Remarks</th>
+        <th style="width: 5%;">Received</th>
+        <th>Receive Date</th>
+        <th>Transaction No</th>
+        <th>Receive Remarks</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+</table>
+<form [formGroup]="editForm">
+<table border="1" width="100%">
+    <tbody>
+      <tr *ngFor="let plan of filteredLinks()">
+        <td style="width: 10%;">{{ plan.ClientName }}</td>
+        <td style="width: 10%;">{{ plan.CompanyName }}</td>
+        <td style="width: 10%;">{{ plan.PaymentDate | date }}</td>
+        <td style="width: 10%;">{{ plan.InterestAmount }}</td>
+        <td style="width: 10%;">{{ plan.PrincipalAmount }}</td>
+        <td style="width: 10%;">{{ plan.Remarks }}</td>
+
+        <!-- Received -->
+        <td style="width: 5%;" *ngIf="editingId !== plan.ReturnId">{{ plan.Received ? 'Yes' : 'No' }}</td>
+        <td style="width: 5%;" *ngIf="editingId === plan.ReturnId">
+          <select formControlName="Received">
+            <option [value]="1">Yes</option>
+            <option [value]="0">No</option>
+          </select>
+        </td>
+
+        <!-- Receive Date -->
+        <td style="width: 10%;" *ngIf="editingId !== plan.ReturnId">{{ plan.ReceiveDate | date }}</td>
+        <td style="width: 10%;" *ngIf="editingId === plan.ReturnId">
+          <input type="date" formControlName="ReceiveDate" />
+        </td>
+
+        <!-- Transaction No -->
+        <td *ngIf="editingId !== plan.ReturnId">{{ plan.transactionNo }}</td>
+        <td *ngIf="editingId === plan.ReturnId">
+          <input type="text" formControlName="transactionNo" />
+        </td>
+
+        <!-- Receive Remarks -->
+        <td *ngIf="editingId !== plan.ReturnId">{{ plan.receiveRemrks }}</td>
+        <td *ngIf="editingId === plan.ReturnId">
+          <input type="text" formControlName="receiveRemrks" />
+        </td>
+
+        <!-- Actions -->
+        <td>
+          <button *ngIf="editingId !== plan.ReturnId" (click)="editPlan(plan)">Edit</button>
+          <button *ngIf="editingId === plan.ReturnId" (click)="savePlan()">Save</button>
+          <button *ngIf="editingId === plan.ReturnId" (click)="cancelEdit()">Cancel</button>
+        </td>
+      </tr>
+    </tbody>
+</table>
+</form>

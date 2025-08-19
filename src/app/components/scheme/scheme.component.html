@@ -1,0 +1,64 @@
+<h2>Scheme Master</h2>
+
+<form [formGroup]="schemeForm" (ngSubmit)="saveScheme()">
+  <div class="row"></div>
+    <div class="row">
+      <div class="col-md-1"></div>
+      <div class="col-md-2">
+        <label>Scheme Code:</label>
+        <input formControlName="SchemeCode" [readonly]="isEditing" /><br />
+      </div>
+      <div class="col-md-2">
+        <label>Scheme Name:</label>
+        <input formControlName="SchemeName" /><br />
+      </div>
+    <div class="col-md-2">
+      <label>Remarks:</label>
+      <input formControlName="Remarks" /><br />
+    </div>
+    <div class="col-md-2">
+      <label>Interest Type:</label>
+      <input formControlName="InterestType" /><br />
+    </div>
+    <div class="col-md-2">
+      <label>Interest Percent:</label>
+      <input formControlName="InterestPercent" /><br />
+    </div>
+  </div>  
+    <div class="row">
+      <div class="col-md-1"></div>
+      <div class="col-md-2">
+      <button type="submit">{{ isEditing ? 'Update' : 'Save' }}</button>
+    </div>
+      <div class="col-md-2">
+      <button type="button" (click)="cancelEdit()">Cancel</button>
+    </div>
+  </div>
+
+</form>
+
+<table border="1" style="margin-top: 20px;">
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Name</th>
+      <th>Remarks</th>
+      <th>Type</th>
+      <th>Interest %</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let scheme of schemes">
+      <td>{{ scheme.SchemeCode }}</td>
+      <td>{{ scheme.SchemeName }}</td>
+      <td>{{ scheme.Remarks }}</td>
+      <td>{{ scheme.InterestType }}</td>
+      <td>{{ scheme.InterestPercent }}</td>
+      <td>
+        <button (click)="editScheme(scheme)">Edit</button>
+        <button (click)="deleteScheme(scheme.SchemeCode)">Delete</button>
+      </td>
+    </tr>
+  </tbody>
+</table>

@@ -1,0 +1,16 @@
+<!-- report.component.html -->
+<div *ngIf="reportData.length">
+    <table style="width: 100%; border: 1px solid black;">
+      <thead>
+        <tr>
+          <th class="px-4 py-2 border" style="width: 2%;" *ngFor="let col of columns">{{ col }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let row of reportData">
+          <td style="width: 2%;" *ngFor="let col of columns">{{ row[col] }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
